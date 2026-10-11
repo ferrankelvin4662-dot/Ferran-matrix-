@@ -1,0 +1,329 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>US Citizen Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f9;--surface:#fff;--ink:#101a2c;--muted:#53607a;--line:#d5dce8;--navy:#14284b;--red:#b3202f;--blue:#1f4fa3;--on-navy:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1424;--surface:#16203a;--ink:#eaf0fb;--muted:#a3b0c9;--line:#2a3860;--navy:#0a1226;--red:#ff6b78;--blue:#8db4ff}}
+:root[data-theme="dark"]{--bg:#0d1424;--surface:#16203a;--ink:#eaf0fb;--muted:#a3b0c9;--line:#2a3860;--navy:#0a1226;--red:#ff6b78;--blue:#8db4ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "Public Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+a{color:inherit}
+header{background:var(--navy);color:var(--on-navy);border-bottom:6px solid var(--red)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-weight:600;font-size:15px}
+.top button{background:none;border:1px solid rgba(255,255,255,.4);color:inherit;border-radius:6px;padding:6px 10px;font:inherit;font-size:13px;cursor:pointer}
+.hero{padding:28px 0 38px}
+h1{font-size:clamp(30px,6vw,52px);line-height:1.08;font-weight:800;margin:0 0 12px;letter-spacing:-.02em;max-width:16ch}
+.hero p{margin:0 0 22px;max-width:56ch;color:#cdd8ee}
+.search{display:flex;gap:8px;max-width:560px}
+.search input{flex:1;min-width:0;padding:13px 14px;border-radius:8px;border:2px solid transparent;font:inherit;background:#fff;color:#101a2c}
+.search input:focus{outline:3px solid #ffd479;outline-offset:1px}
+nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 8px}
+.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:999px;font:inherit;font-weight:600;font-size:14px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .tabs button[aria-pressed="true"]{color:#0d1424}
+.tabs button:focus-visible,.top button:focus-visible,a:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+.level{margin:28px 0 8px}
+.level h2{font-size:24px;margin:0;display:flex;align-items:center;gap:10px}
+.level h2::before{content:"";width:10px;height:26px;border-radius:2px;background:var(--lc,var(--blue))}
+.level>p{margin:4px 0 14px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--lc,var(--blue));border-radius:6px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0;font-size:18px}
+.card .agency{font-size:13px;color:var(--muted);font-weight:600}
+.card p{margin:0;font-size:15px}
+.card ul{margin:2px 0 6px;padding-left:18px;font-size:14px;color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:8px}
+.links a{font-size:14px;font-weight:600;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:8px;display:none}
+.note{margin:34px 0 0;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-radius:8px;font-size:15px}
+.note strong{display:block;margin-bottom:4px}
+.profile{margin:22px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.profile h2{margin:0 0 4px;font-size:22px}
+.profile p{margin:0 0 12px;color:var(--muted);font-size:15px}
+.profile form{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.profile label{display:grid;gap:4px;font-weight:600;font-size:14px}
+.profile input[type=text],.profile select{padding:10px;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--bg);color:var(--ink)}
+.profile fieldset{grid-column:1/-1;border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.profile legend{font-weight:600;font-size:14px;padding:0 6px}
+.profile fieldset label{display:flex;gap:8px;align-items:center;font-weight:400}
+.profile .act{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.profile button{padding:10px 16px;border-radius:6px;border:1px solid var(--blue);font:inherit;font-weight:600;cursor:pointer;background:var(--blue);color:#fff}
+.profile button.alt{background:none;color:var(--blue)}
+#pmsg{font-size:14px;color:var(--muted)}
+#pmsg.err{color:var(--red)}
+.pd{margin:26px 0 0}
+.pd input:not([type=checkbox]){padding:10px;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--bg);color:var(--ink);width:100%}
+.pd h3{margin:14px 0 2px;font-size:17px}
+.pd button.sm{padding:6px 10px;font-size:13px}
+.pd button.danger{background:none;border-color:var(--red);color:var(--red)}
+.pd textarea{width:100%;min-height:90px;font-size:12px;word-break:break-all;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);margin-top:8px}
+.drow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.dl{font-size:13px;color:var(--muted)}
+.dv{font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all}
+.soon{color:var(--red);font-weight:600;font-size:13px}
+.dacts{display:flex;gap:6px;flex-shrink:0}
+#dmsg{min-height:22px;font-size:14px;margin-bottom:6px}
+footer{padding:26px 0 40px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+ <div class="top"><span>US Citizen Portal</span><a href="#docs" style="margin-left:auto;margin-right:12px;color:#fff;font-size:14px">My documents</a><button id="theme" type="button">Toggle theme</button></div>
+ <div class="hero">
+  <h1>Your US records, one directory.</h1>
+  <p>Find the official place to manage your tax, Social Security, passport, health, driver, voter and credit records. Federal, state and private-sector services in one list.</p>
+  <form class="search" role="search" onsubmit="return false">
+   <input id="q" type="search" placeholder="Search: passport, taxes, credit freeze…" aria-label="Search services" autocomplete="off">
+  </form>
+ </div>
+</div>
+</header>
+
+<main class="wrap">
+ <nav class="tabs" aria-label="Filter by level">
+  <button type="button" data-f="all" aria-pressed="true">All</button>
+  <button type="button" data-f="federal" aria-pressed="false">Federal</button>
+  <button type="button" data-f="state" aria-pressed="false">State</button>
+  <button type="button" data-f="private" aria-pressed="false">Private sector</button>
+ </nav>
+
+ <section class="level" data-level="federal" style="--lc:#1f4fa3">
+  <h2>Federal level</h2>
+  <p>Records held by national agencies.</p>
+  <div class="grid">
+   <article class="card"><h3>Tax</h3><span class="agency">Internal Revenue Service (IRS)</span><p>File returns, check refunds, pay balances and view tax transcripts.</p><ul><li>Online account and transcripts</li><li>Where's My Refund</li><li>Free File</li></ul><div class="links"><a href="https://www.irs.gov/account" target="_blank" rel="noopener">IRS online account</a><a href="https://www.irs.gov/refunds" target="_blank" rel="noopener">Check refund</a></div></article>
+   <article class="card"><h3>Social Security</h3><span class="agency">Social Security Administration (SSA)</span><p>Check earnings, estimate benefits, replace a Social Security card.</p><ul><li>my Social Security account</li><li>Replacement card</li><li>Retirement and disability benefits</li></ul><div class="links"><a href="https://www.ssa.gov/myaccount/" target="_blank" rel="noopener">my Social Security</a><a href="https://www.ssa.gov/number-card" target="_blank" rel="noopener">Card services</a></div></article>
+   <article class="card"><h3>Passports</h3><span class="agency">Department of State</span><p>Apply for, renew or replace a US passport and track its status.</p><ul><li>First-time application</li><li>Online renewal</li><li>Lost or stolen passport</li></ul><div class="links"><a href="https://travel.state.gov/content/travel/en/passports.html" target="_blank" rel="noopener">Passport services</a><a href="https://passportstatus.state.gov/" target="_blank" rel="noopener">Check status</a></div></article>
+   <article class="card"><h3>Health: Medicare</h3><span class="agency">Centers for Medicare &amp; Medicaid Services</span><p>Sign up for Medicare, compare plans and view your claims.</p><ul><li>Enrollment</li><li>Plan finder</li><li>Claims and coverage</li></ul><div class="links"><a href="https://www.medicare.gov/" target="_blank" rel="noopener">Medicare.gov</a><a href="https://www.mymedicare.gov/" target="_blank" rel="noopener">MyMedicare account</a></div></article>
+   <article class="card"><h3>Health: Veterans</h3><span class="agency">Department of Veterans Affairs (VA)</span><p>Apply for VA health care and benefits, refill prescriptions, message your care team.</p><ul><li>Health care enrollment</li><li>Disability compensation</li><li>Prescriptions</li></ul><div class="links"><a href="https://www.va.gov/" target="_blank" rel="noopener">VA.gov</a><a href="https://www.va.gov/health-care/apply/application/introduction" target="_blank" rel="noopener">Apply for care</a></div></article>
+   <article class="card"><h3>Sign in to federal services</h3><span class="agency">Login.gov / USA.gov</span><p>One secure account for many federal sites, plus a guide to all government services.</p><div class="links"><a href="https://www.login.gov/" target="_blank" rel="noopener">Login.gov</a><a href="https://www.usa.gov/" target="_blank" rel="noopener">USA.gov</a></div></article>
+  </div>
+ </section>
+
+ <section class="level" data-level="state" style="--lc:#b3202f">
+  <h2>State level</h2>
+  <p>Records held by your state. Each state runs its own site, so use these directories to find yours.</p>
+  <div class="grid">
+   <article class="card"><h3>Drivers &amp; vehicles</h3><span class="agency">State DMVs</span><p>Driver's license or REAL ID, vehicle registration, titles and plates.</p><ul><li>License and ID renewal</li><li>Vehicle registration</li><li>Address change</li></ul><div class="links"><a href="https://www.usa.gov/motor-vehicle-services" target="_blank" rel="noopener">Find your state DMV</a><a href="https://www.dhs.gov/real-id" target="_blank" rel="noopener">REAL ID info</a></div></article>
+   <article class="card"><h3>Voter records</h3><span class="agency">State election offices</span><p>Register to vote, check your registration, find your polling place and request a mail ballot.</p><ul><li>Registration status</li><li>Polling place</li><li>Absentee / mail ballot</li></ul><div class="links"><a href="https://vote.gov/" target="_blank" rel="noopener">Vote.gov</a><a href="https://www.usa.gov/election-office" target="_blank" rel="noopener">Your election office</a></div></article>
+   <article class="card"><h3>Vital records</h3><span class="agency">State and county health departments</span><p>Order birth, marriage and death certificates from the state where the event happened.</p><div class="links"><a href="https://www.cdc.gov/nchs/w2w/index.htm" target="_blank" rel="noopener">Where to write for records</a><a href="https://www.usa.gov/states-and-territories" target="_blank" rel="noopener">State directory</a></div></article>
+  </div>
+ </section>
+
+ <section class="level" data-level="private" style="--lc:#14284b">
+  <h2>Private sector</h2>
+  <p>Companies that hold data about you. You have rights to see and limit it.</p>
+  <div class="grid">
+   <article class="card"><h3>Credit reports</h3><span class="agency">Equifax, Experian, TransUnion</span><p>Get your free reports from all three bureaus through the one official site.</p><ul><li>Free weekly reports</li><li>Dispute errors</li></ul><div class="links"><a href="https://www.annualcreditreport.com/" target="_blank" rel="noopener">AnnualCreditReport.com</a></div></article>
+   <article class="card"><h3>Credit freeze &amp; fraud alert</h3><span class="agency">Equifax, Experian, TransUnion</span><p>Freezing your credit is free and blocks new accounts opened in your name. Freeze at each bureau.</p><div class="links"><a href="https://www.equifax.com/personal/credit-report-services/credit-freeze/" target="_blank" rel="noopener">Equifax</a><a href="https://www.experian.com/freeze/center.html" target="_blank" rel="noopener">Experian</a><a href="https://www.transunion.com/credit-freeze" target="_blank" rel="noopener">TransUnion</a></div></article>
+   <article class="card"><h3>Consumer data</h3><span class="agency">Data brokers</span><p>Brokers collect and sell personal details. Learn how to limit it and stop pre-approved credit offers.</p><div class="links"><a href="https://consumer.ftc.gov/" target="_blank" rel="noopener">FTC consumer advice</a><a href="https://www.optoutprescreen.com/" target="_blank" rel="noopener">Opt out of offers</a></div></article>
+   <article class="card"><h3>Identity theft</h3><span class="agency">Federal Trade Commission</span><p>Report identity theft and get a personal recovery plan.</p><div class="links"><a href="https://www.identitytheft.gov/" target="_blank" rel="noopener">IdentityTheft.gov</a></div></article>
+  </div>
+ </section>
+
+ <section class="profile" id="profile" aria-labelledby="ph" hidden>
+ <h2 id="ph">My profile</h2>
+ <p>Save your name, state and to-do list on this device only. Nothing is sent anywhere. Do not enter your SSN, passwords or card numbers. For official sign-in, use <a href="https://www.login.gov/" target="_blank" rel="noopener">Login.gov</a>.</p>
+ <form id="pf" autocomplete="off">
+  <label>Name<input type="text" id="pn" maxlength="60"></label>
+  <label>State<select id="ps"><option value="">Choose state</option></select></label>
+  <fieldset><legend>Things I need to do</legend>
+   <label><input type="checkbox" value="Renew passport">Renew passport</label>
+   <label><input type="checkbox" value="Get REAL ID">Get REAL ID</label>
+   <label><input type="checkbox" value="Check voter registration">Check voter registration</label>
+   <label><input type="checkbox" value="Freeze credit">Freeze credit</label>
+   <label><input type="checkbox" value="File taxes">File taxes</label>
+   <label><input type="checkbox" value="Check Social Security earnings">Check Social Security earnings</label>
+  </fieldset>
+  <div class="act"><button type="submit">Save profile</button><button type="button" class="alt" id="pc">Clear</button><span id="pmsg" role="status"></span></div>
+ </form>
+</section>
+
+ <section class="profile pd" id="docs" aria-labelledby="dh">
+ <h2 id="dh">My documents</h2>
+ <p>Keep your ID, driving licence, passport and other legal details in one place. They are encrypted on this device with your passphrase and nothing is uploaded. If you forget the passphrase, nothing can recover them.</p>
+ <div id="dmsg" role="status"></div>
+ <div id="dlockwrap">
+  <form id="dlock" autocomplete="off">
+   <label>Passphrase (at least 10 characters)<input type="password" id="dp" autocomplete="off"></label>
+   <label id="dp2l">Repeat passphrase<input type="password" id="dp2" autocomplete="off"></label>
+   <div class="act"><button type="submit" id="dbtn">Create vault</button></div>
+  </form>
+  <details style="margin-top:14px"><summary>Restore from backup</summary><textarea id="drb" aria-label="Backup text" placeholder="Paste backup text, enter its passphrase above, then tap Restore"></textarea><button type="button" class="sm" id="drbtn" style="margin-top:8px">Restore</button></details>
+ </div>
+ <div id="dview" hidden></div>
+ <form id="dedit" hidden autocomplete="off"></form>
+</section>
+
+ <p class="empty" id="empty">No services match that search. Try a shorter word like "tax" or "credit".</p>
+
+ <div class="note"><strong>Your data stays with you.</strong>This directory is not a government site. My documents is encrypted on your own device and nothing is uploaded. Every link goes to the official agency or company, so sign in and enter details on their sites only.</div>
+</main>
+<footer><div class="wrap">Independent directory. Not affiliated with any government agency. Check each site's address before signing in.</div></footer>
+
+<script>
+(function(){
+var q=document.getElementById('q'),empty=document.getElementById('empty'),filter='all';
+var btns=document.querySelectorAll('.tabs button'),levels=document.querySelectorAll('.level');
+function apply(){
+ var t=q.value.trim().toLowerCase(),shown=0;
+ levels.forEach(function(l){
+  var okLevel=filter==='all'||l.dataset.level===filter,n=0;
+  l.querySelectorAll('.card').forEach(function(c){
+   var m=okLevel&&(!t||c.textContent.toLowerCase().indexOf(t)>-1);
+   c.style.display=m?'':'none';if(m)n++;
+  });
+  l.style.display=n?'':'none';shown+=n;
+ });
+ empty.style.display=shown?'none':'block';
+}
+q.addEventListener('input',apply);
+btns.forEach(function(b){b.addEventListener('click',function(){
+ filter=b.dataset.f;btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)});apply();
+});});
+var ST=['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+var pn=document.getElementById('pn'),ps=document.getElementById('ps'),pm=document.getElementById('pmsg'),pf=document.getElementById('pf'),boxes=pf.querySelectorAll('input[type=checkbox]');
+ST.forEach(function(s){var o=document.createElement('option');o.value=o.textContent=s;ps.appendChild(o);});
+function msg(t,e){pm.textContent=t;pm.className=e?'err':''}
+try{var d=JSON.parse(localStorage.getItem('usp')||'null');if(d){pn.value=d.n||'';ps.value=d.s||'';boxes.forEach(function(b){b.checked=(d.t||[]).indexOf(b.value)>-1});msg('Welcome back'+(d.n?', '+d.n:'')+'.')}}catch(e){}
+pf.addEventListener('submit',function(ev){ev.preventDefault();
+ if(/\d{3}[\s-]?\d{2}[\s-]?\d{4}|\d{6,}/.test(pn.value)){msg('That looks like a number. Enter your name only, never an ID number.',true);return}
+ var t=[];boxes.forEach(function(b){if(b.checked)t.push(b.value)});
+ try{localStorage.setItem('usp',JSON.stringify({n:pn.value.trim(),s:ps.value,t:t}));msg('Saved on this device.')}catch(e){msg('Could not save in this browser.',true)}
+});
+document.getElementById('pc').addEventListener('click',function(){
+ try{localStorage.removeItem('usp')}catch(e){}
+ pf.reset();msg('Profile cleared.');
+});
+(function(){
+var $=function(i){return document.getElementById(i)},E=new TextEncoder(),D=new TextDecoder(),K='usd1',key=null,salt=null,d={},tm=null;
+var F=[['Personal','name','Full legal name'],['Personal','dob','Date of birth','date'],['Personal','pob','Place of birth'],['Personal','addr','Home address'],['Personal','phone','Phone'],['Personal','email','Email'],['Identity','ssn','Social Security number'],['Identity','sid','State ID / REAL ID number'],['Identity','sidx','State ID expiry','date'],['Identity','bc','Birth certificate number'],['Driving','dl','Driving licence number'],['Driving','dls','Issuing state'],['Driving','dlx','Licence expiry','date'],['Driving','veh','Vehicle plate / VIN'],['Travel','pp','Passport number'],['Travel','ppx','Passport expiry','date'],['Health and benefits','mc','Medicare number'],['Health and benefits','ins','Health insurance member ID'],['Health and benefits','rx','Pharmacy / Rx ID'],['Voter','vr','Voter registration number'],['Tax','ein','EIN / business ID (if any)'],['Other','note','Other notes']];
+function sm(t,e){$('dmsg').textContent=t;$('dmsg').style.color=e?'var(--red)':''}
+function enc(s){return new Uint8Array(s)}
+function b64(buf){var b='';var u=new Uint8Array(buf);for(var i=0;i<u.length;i++)b+=String.fromCharCode(u[i]);return btoa(b)}
+function ub64(s){var b=atob(s),u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+async function derive(p,s){
+ var base=await crypto.subtle.importKey('raw',E.encode(p),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt:s,iterations:250000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])
+}
+function newSalt(){var s=new Uint8Array(16);crypto.getRandomValues(s);return s}
+function save(){
+ if(!key||!salt)return;
+ var pt=E.encode(JSON.stringify(d));
+ var iv=new Uint8Array(12);crypto.getRandomValues(iv);
+ crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,pt).then(function(ct){
+  var out={v:1,s:b64(salt),i:b64(iv),c:b64(ct)};
+  localStorage.setItem(K,JSON.stringify(out));
+ });
+}
+function toast(){
+ var m=document.createElement('span');m.textContent='Saved.';sm('Saved.');clearTimeout(tm);tm=setTimeout(function(){sm('')},1500)
+}
+function show(){
+ $('dlockwrap').hidden=true;$('dview').hidden=false;
+ var v=$('dview');v.innerHTML='';
+ var head=document.createElement('div');head.className='drow';
+ head.innerHTML='<strong>Your vault</strong>';
+ var hb=document.createElement('div');hb.className='dacts';
+ var bk=document.createElement('button');bk.type='button';bk.className='sm';bk.textContent='Backup';
+ var lk=document.createElement('button');lk.type='button';lk.className='sm';lk.textContent='Lock';
+ hb.appendChild(bk);hb.appendChild(lk);head.appendChild(hb);v.appendChild(head);
+ F.forEach(function(f){
+  var row=document.createElement('div');row.className='drow';
+  var left=document.createElement('div');
+  var lab=document.createElement('div');lab.className='dl';lab.textContent=f[2];
+  var val=document.createElement('div');val.className='dv';val.textContent=d[f[1]]||'—';
+  left.appendChild(lab);left.appendChild(val);
+  var act=document.createElement('div');act.className='dacts';
+  var ed=document.createElement('button');ed.type='button';ed.className='sm';ed.textContent='Edit';
+  ed.addEventListener('click',function(){editField(f[1],f[2])});
+  act.appendChild(ed);
+  row.appendChild(left);row.appendChild(act);v.appendChild(row);
+ });
+ bk.addEventListener('click',function(){doBackup()});
+ lk.addEventListener('click',function(){lock()});
+}
+function lock(){
+ key=null;salt=null;
+ $('dview').hidden=true;$('dview').innerHTML='';
+ $('dlockwrap').hidden=false;
+ $('dlock').reset();
+ var dp2l=$('dp2l');if(dp2l)dp2l.hidden=false;
+ $('dbtn').textContent='Unlock vault';
+ sm('Vault locked.');
+}
+function doBackup(){
+ if(!key)return;
+ var pt=E.encode(JSON.stringify(d));
+ var iv=new Uint8Array(12);crypto.getRandomValues(iv);
+ crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,pt).then(function(ct){
+  var out={v:1,s:b64(salt),i:b64(iv),c:b64(ct)};
+  var txt=btoa(JSON.stringify(out));
+  $('drb').value=txt;
+  sm('Backup text placed in the box below. Copy and store it safely.');
+ });
+}
+function editField(k,label){
+ var cur=d[k]||'';
+ var v=prompt(label+' (leave blank to clear):',cur);
+ if(v===null)return;
+ if(v.trim()===''){delete d[k]}else{d[k]=v.trim()}
+ save();show();toast();
+}
+async function unlock(p){
+ sm('Unlocking…');
+ try{
+  var raw=JSON.parse(localStorage.getItem(K));
+  if(!raw)throw new Error('none');
+  var s=ub64(raw.s),iv=ub64(raw.i),ct=ub64(raw.c);
+  var kk=await derive(p,s);
+  var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:iv},kk,ct);
+  key=kk;salt=s;d=JSON.parse(D.decode(pt));
+  sm('Vault unlocked.');show();
+ }catch(e){sm('Wrong passphrase or no vault. Try again.',true)}
+}
+$('dlock').addEventListener('submit',function(ev){
+ ev.preventDefault();
+ var p=$('dp').value,p2=$('dp2').value;
+ var raw=localStorage.getItem(K);
+ if(!raw){
+  if(p.length<10){sm('Use at least 10 characters.',true);return}
+  if(p!==p2){sm('Passphrases do not match.',true);return}
+  var s=newSalt();
+  derive(p,s).then(function(kk){key=kk;salt=s;d={};save();sm('Vault created.');show()});
+ }else{
+  if(p.length<10){sm('Enter your passphrase (at least 10 characters).',true);return}
+  unlock(p);
+ }
+});
+$('drbtn').addEventListener('click',function(){
+ var txt=$('drb').value.trim(),p=$('dp').value;
+ if(!txt){sm('Paste backup text first.',true);return}
+ if(p.length<10){sm('Enter the backup passphrase above first.',true);return}
+ try{
+  var raw=JSON.parse(atob(txt));
+  var s=ub64(raw.s),iv=ub64(raw.i),ct=ub64(raw.c);
+  derive(p,s).then(function(kk){
+   return crypto.subtle.decrypt({name:'AES-GCM',iv:iv},kk,ct).then(function(pt){
+    key=kk;salt=s;d=JSON.parse(D.decode(pt));save();
+    sm('Restored from backup.');show();
+   });
+  }).catch(function(){sm('Could not restore: wrong passphrase or damaged backup.',true)});
+ }catch(e){sm('Backup text is not valid.',true)}
+});
+var raw0=localStorage.getItem(K);
+if(raw0){$('dbtn').textContent='Unlock vault';}else{$('dbtn').textContent='Create vault';}
+})();
+})();
+</script>
+</body>
+</html>
